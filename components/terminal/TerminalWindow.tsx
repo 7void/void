@@ -11,6 +11,8 @@ import {
   HelpCircle,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useRouter } from "next/navigation";
+import { useAuth } from "@/lib/auth-context";
 
 interface CommandOutput {
   id: string;
@@ -42,6 +44,8 @@ export const TerminalWindow: React.FC<TerminalWindowProps> = ({
   className,
   onCommandRun,
 }) => {
+  const router = useRouter();
+  const { login } = useAuth();
   const [history, setHistory] = useState<CommandOutput[]>([
     {
       id: "init-banner",
@@ -130,6 +134,46 @@ export const TerminalWindow: React.FC<TerminalWindowProps> = ({
           type: "session",
         },
       ]);
+      // Authenticate via demo session
+      setTimeout(async () => {
+        try {
+          await login("demo@void.dev", "password123");
+        } catch (err) {
+          console.error("CLI session error", err);
+        }
+      }, 1200);
+    } else if (cmd === "login") {
+      const loginParts = args.split(" ");
+      const emailArg = loginParts[0] || "demo@void.dev";
+      const passArg = loginParts[1] || "password123";
+      setHistory((prev) => [
+        ...prev,
+        {
+          id: newId,
+          command: fullCmd,
+          type: "text",
+          customContent: <p className="text-purple-400">Authenticating CLI user {emailArg}...</p>,
+        },
+      ]);
+      setTimeout(async () => {
+        const res = await login(emailArg, passArg);
+        if (!res.success) {
+          setHistory((prev) => [
+            ...prev,
+            {
+              id: `err-${Date.now()}`,
+              type: "error",
+              customContent: <p className="text-rose-400">Authentication failed: {res.error}</p>,
+            },
+          ]);
+        }
+      }, 800);
+    } else if (cmd === "feed") {
+      router.push("/feed");
+    } else if (cmd === "projects") {
+      router.push("/projects");
+    } else if (cmd === "explore") {
+      router.push("/explore");
     } else if (cmd === "tip") {
       setHistory((prev) => [
         ...prev,

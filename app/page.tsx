@@ -1,9 +1,12 @@
-import LoginCard from "@/components/auth/LoginCard";
+import { redirect } from "next/navigation";
+import { getSession } from "@/lib/auth";
 
-export default function Home() {
-  return (
-    <main className="h-screen w-full bg-[#090909] text-white flex items-center justify-center p-4 sm:p-6 lg:p-10 overflow-hidden">
-      <LoginCard />
-    </main>
-  );
+export default async function HomePage() {
+  const session = await getSession();
+
+  if (session && session.userId) {
+    redirect("/feed");
+  } else {
+    redirect("/login");
+  }
 }

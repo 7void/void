@@ -6,28 +6,44 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "seed": "tsx scripts/seed.ts",
+    "indexes": "tsx scripts/indexes.ts",
+    "test:api": "tsx tests/e2e-api.test.ts",
+    "query:posts": "tsx scripts/queries/01-paginated-posts.ts",
+    "query:projects": "tsx scripts/queries/02-filter-projects.ts",
+    "query:follows": "tsx scripts/queries/03-follow-relations.ts",
+    "query:popular": "tsx scripts/queries/04-popular-posts.ts",
+    "query:tech": "tsx scripts/queries/05-trending-tech.ts",
+    "query:search": "tsx scripts/queries/06-search.ts",
+    "query:explain": "tsx scripts/queries/07-explain-execution.ts"
   },
   "dependencies": {
     "@base-ui/react": "^1.7.0",
+    "bcryptjs": "^3.0.3",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "jose": "^6.2.12",
     "lucide-react": "^1.28.0",
+    "mongodb": "^7.7.0",
     "next": "16.3.0",
     "react": "19.2.8",
     "react-dom": "19.2.8",
     "shadcn": "^4.16.1",
     "tailwind-merge": "^3.6.0",
-    "tw-animate-css": "^1.4.0"
+    "tw-animate-css": "^1.4.0",
+    "zod": "^4.6.7"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
+    "@types/bcryptjs": "^2.4.6",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "16.3.0",
     "tailwindcss": "^4",
+    "tsx": "^4.23.15",
     "typescript": "^5"
   }
 }
